@@ -1,0 +1,30 @@
+le API di mastodon raccolgono diversi tipi di dati:
+1. toots
+2. utenti
+3. followers 
+4. seguiti 
+5. hashtag
+6. trend 
+7. notifiche
+
+
+Ogni API ha un rate limit specifico, ovvero un limite 
+massimo di richieste che possono essere effettuate in 
+un determinato periodo di tempo. È importante rispettare 
+questi limiti per evitare di essere bloccati dall'istanza Mastodon.
+
+Per calcolare quante richieste possiamo fare dobbiamo considerare:
+
+1. LIMITE RICHIESTE PER ENDOPOINT, specificato nella documentazione;
+2. NUMERO UTENTI DA MONITORARE, quanti utenti e post vogliamo raccogliere;
+3. FREQUENZA DELLE RICHIESTE, ogni quanto tempo vogliamo aggiornare i dati raccolti;
+
+Endpoint: /api/v1/timelines/public   : restituisce i post pubblici 
+
+
+A cosa serve la libreria sys?
+Consente di leggere e gestire gli argomenti passati a riga di comando e 
+terminare il programma in modo controllato se si verificano condizioni di errore.
+
+A cosa serve request?
+Serve ad effettuare richieste HTTP come GET, POST, PUT, DELETE.
