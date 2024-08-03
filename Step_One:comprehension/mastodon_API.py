@@ -1,17 +1,11 @@
 import requests
-import logging 
+import logging
 
 # Configurazione del logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def handle_http_error(response):
-    """
-    Gestisce e stampa i dettagli dell'errore HTTP in base al codice di stato.
-
-    :param response: Oggetto di risposta della richiesta HTTP.
-    """
     status_code = response.status_code
-
     match status_code:
         case 400:
             logging.error("Bad Request: The server could not understand the request.")
@@ -26,28 +20,18 @@ def handle_http_error(response):
         case _:
             logging.error(f"HTTP error occurred with status code {status_code}: {response.reason}")
 
-
-
-def make_post_request(url, access_token, data):
+def make_post_request(url, headers, data):
     """
-    Invia una richiesta POST a un URL specificato con i dati forniti e l'access token di Mastodon.
+    Invia una richiesta POST a un URL specificato con i dati forniti e gli header forniti.
 
     :param url: L'URL a cui inviare la richiesta POST.
-    :param access_token: L'access token per l'autenticazione con l'API di Mastodon.
+    :param headers: Gli header della richiesta.
     :param data: I dati da inviare nella richiesta POST, come dizionario.
     :return: La risposta del server.
     """
-    headers = {
-        'Authorization': f'Bearer {access_token}', #autenticazione all'API per effettuare richiesta
-        'Content-Type': 'application/json' #voglio postare il contenuto di un file JSON
-    }
-    
     try:
         response = requests.post(url, headers=headers, json=data)
-        # Con json=data,la libreria requests converte automaticamente il dizionario data in una stringa JSON 
-        # e imposta l'header Content-Type a application/json.
-
-        response.raise_for_status()  # ritorna requests.exceptions.HTTPError in caso di 4xx/5xx
+        response.raise_for_status()  # Ritorna requests.exceptions.HTTPError in caso di 4xx/5xx
         return response
     
     except requests.exceptions.HTTPError as http_err:
@@ -59,19 +43,96 @@ def make_post_request(url, access_token, data):
     except Exception as err:
         logging.error(f"Other error occurred: {err}")
 
-def main():
-   
-    url = "https://mastodon.social/api/v1/statuses" 
-    access_token ='m4OkFhIdpe93ABgKoUOBuBfG7NboAM8dpiI1K27BCcc'  
-    data = {
-        "status": "Hello, Mastodon! I am posting using API"
-    }
-    
-    response = make_post_request(url, access_token, data)
-    
-    if response:
-        logging.info(response)
+def make_delete_request(url, headers):
+    """
+    Invia una richiesta DELETE a un URL specificato con gli header forniti.
 
+    :param url: L'URL a cui inviare la richiesta DELETE.
+    :param headers: Gli header della richiesta.
+    :return: La risposta del server.
+    """
+    try:
+        response = requests.delete(url, headers=headers)
+        response.raise_for_status()
+        return response
+    except requests.exceptions.HTTPError as http_err:
+        logging.error(f"HTTP error occurred: {http_err}")
+        logging.error(f"Response Status Code: {response.status_code}")
+        logging.error(f"Response Headers: {response.headers}")
+        logging.error(f"Response Body: {response.text}")
+        handle_http_error(response)
+    except Exception as err:
+        logging.error(f"Other error occurred: {err}")
+
+def get_user_posts(user_id, headers):
+    """
+    Ottiene i post dell'utente tramite l'API di Mastodon.
+
+    :param user_id: ID dell'utente di cui ottenere i post.
+    :param headers: Gli header della richiesta.
+    :return: Lista dei post dell'utente.
+    """
+    url = f"https://mastodon.social/api/v1/accounts/{user_id}/statuses"
+    try:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.HTTPError as http_err:
+        logging.error(f"HTTP error occurred: {http_err}")
+        logging.error(f"Response Status Code: {response.status_code}")
+        logging.error(f"Response Headers: {response.headers}")
+        logging.error(f"Response Body: {response.text}")
+        handle_http_error(response)
+    except Exception as err:
+        logging.error(f"Other error occurred: {err}")
+
+def main():
+    
+    user_id = '112762111075688795'  
+    access_token = 'm4OkFhIdpe93ABgKoUOBuBfG7NboAM8dpiI1K27BCcc'  # Assicurati di usare un token di accesso valido
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json'
+    }
+
+    while True:
+        action = input("Vuoi pubblicare un nuovo post, eliminare un post esistente o uscire? (pubblica/elimina/exit): ").strip().lower()
+        
+        if action == 'exit':
+            logging.info("Uscita dal programma.")
+            break
+        
+        elif action == 'pubblica':
+            url = "https://mastodon.social/api/v1/statuses"
+            content = input("Inserisci il contenuto del post che vuoi creare: ")
+            data = {
+                "status": content
+            }
+            response = make_post_request(url, headers, data)
+            if response:
+                logging.info("Post pubblicato con successo.")
+                logging.info(f"Response: {response}")  # Visualizza la risposta in formato JSON
+        
+        elif action == 'elimina':
+            
+            posts = get_user_posts(user_id, headers)
+            
+            if not posts:
+                logging.info('Non ci sono post disponibili')
+                continue
+
+            for post in posts:
+                logging.info(f"Post ID: {post['id']}, Content: {post['content']}")
+
+            post_id = input("Inserisci l'ID del post che vuoi eliminare: ")
+            url = f"https://mastodon.social/api/v1/statuses/{post_id}"
+            response = make_delete_request(url, headers)
+            if response:
+                logging.info("Post eliminato con successo.")
+                logging.info(f"Response: {response}")  # Visualizza la risposta in formato JSON
+        
+        else:
+            logging.error("Azione non riconosciuta. Per favore scegli 'pubblica', 'elimina' o 'exit'.")
 
 if __name__ == "__main__":
     main()

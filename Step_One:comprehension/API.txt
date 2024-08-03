@@ -28,3 +28,15 @@ terminare il programma in modo controllato se si verificano condizioni di errore
 
 A cosa serve request?
 Serve ad effettuare richieste HTTP come GET, POST, PUT, DELETE.
+
+
+L'access token rappresenta le credenziali di un utente e consente all'applicazione 
+di agire a nome di quell'utente. Quando utilizzi un access token, le API sanno chi è l'utente, 
+ma non sempre è sufficiente per tutte le operazioni.
+Non è necessario includere l'ID dell'utente.
+
+
+L'ID dell'utente è un identificativo univoco dell'utente all'interno del sistema di Mastodon. 
+Serve per specificare esattamente quale utente stai cercando di ottenere o modificare.
+Quando si fa una richiesta GET per ottenere i post di un utente
+è necessario specificare quale utente si intende interrogare. 
