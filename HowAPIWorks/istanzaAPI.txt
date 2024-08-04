@@ -1,0 +1,290 @@
+#--------------------#--------------------#--------------------#--------------------
+instance_info = requests.get(f"{base_url}/api/v1/instance"):
+
+uri: Il dominio dell'istanza Mastodon.
+Esempio: mastodon.social
+
+title: Il titolo o nome dell'istanza.
+Esempio: Mastodon
+
+short_description: Una breve descrizione dell'istanza.
+Esempio: The original server operated by the Mastodon gGmbH non-profit
+
+description: Una descrizione dettagliata dell'istanza.
+Esempio: '' (vuota in questo caso)
+
+email: L'indirizzo email di contatto per l'istanza.
+Esempio: staff@mastodon.social
+
+version: La versione del software Mastodon in esecuzione sull'istanza.
+Esempio: 4.3.0-nightly.2024-08-01
+
+urls: URL rilevanti associati all'istanza.
+Esempio: {'streaming_api': 'wss://streaming.mastodon.social'}
+
+stats: Statistiche dell'istanza.
+
+    user_count: Numero di utenti.
+    Esempio: 2035864
+
+    status_count: Numero di post.
+    Esempio: 99343349
+
+    domain_count: Numero di domini federati.
+    Esempio: 73516
+
+thumbnail: URL dell'immagine di anteprima dell'istanza.
+Esempio: https://files.mastodon.social/site_uploads/files/000/000/001/@1x/57c12f441d083cde.png
+
+languages: Lingue supportate dall'istanza.
+Esempio: ['en']
+
+registrations: Indica se le registrazioni sono aperte.
+Esempio: True
+
+approval_required: Indica se è richiesta l'approvazione per la registrazione.
+Esempio: False
+
+invites_enabled: Indica se sono abilitati gli inviti.
+Esempio: True
+
+configuration: Configurazioni specifiche dell'istanza.
+
+    accounts: Configurazioni relative agli account.
+
+        max_featured_tags: Numero massimo di tag in evidenza.
+        Esempio: 10
+
+    statuses: Configurazioni relative ai post.
+
+        max_characters: Numero massimo di caratteri per post.
+        Esempio: 500
+
+        max_media_attachments: Numero massimo di allegati multimediali per post.
+        Esempio: 4
+
+        characters_reserved_per_url: Numero di caratteri riservati per URL.
+        Esempio: 23
+
+    media_attachments: Configurazioni relative agli allegati multimediali.
+
+        supported_mime_types: Tipi MIME supportati.
+
+        image_size_limit: Limite di dimensione per le immagini.
+        Esempio: 16777216 (16 MB)
+
+        image_matrix_limit: Limite di dimensione per le matrici di immagini.
+        Esempio: 33177600
+
+        video_size_limit: Limite di dimensione per i video.
+        Esempio: 103809024 (100 MB)
+
+        video_frame_rate_limit: Limite di frame rate per i video.
+        Esempio: 120
+
+        video_matrix_limit: Limite di dimensione per le matrici di video.
+        Esempio: 8294400
+
+    polls: Configurazioni relative ai sondaggi.
+
+        max_options: Numero massimo di opzioni per sondaggio.
+        Esempio: 4
+
+        max_characters_per_option: Numero massimo di caratteri per opzione.
+        Esempio: 50
+
+        min_expiration: Scadenza minima per i sondaggi (in secondi).
+        Esempio: 300
+
+        max_expiration: Scadenza massima per i sondaggi (in secondi).
+        Esempio: 2629746
+
+contact_account: Informazioni sull'account di contatto dell'istanza.
+
+    id: ID dell'account.
+    Esempio: 13179
+
+    username: Nome utente.
+    Esempio: Mastodon
+
+    acct: Account.
+    Esempio: Mastodon
+
+    display_name: Nome visualizzato.
+    Esempio: Mastodon
+
+    locked: Indica se l'account è bloccato.
+    Esempio: False
+
+    bot: Indica se l'account è un bot.
+    Esempio: False
+
+    discoverable: Indica se l'account è scopritibile.
+    Esempio: True
+
+    indexable: Indica se l'account è indicizzabile.
+    Esempio: False
+
+    group: Indica se l'account è un gruppo.
+    Esempio: False
+
+    created_at: Data di creazione dell'account.
+    Esempio: 2016-11-23T00:00:00.000Z
+
+    note: Nota dell'account.
+    Esempio: <p>Free, open-source decentralized social media platform.</p>
+
+    url: URL dell'account.
+    Esempio: https://mastodon.social/@Mastodon
+
+    uri: URI dell'account.
+    Esempio: https://mastodon.social/users/Mastodon
+
+    avatar: URL dell'avatar dell'account.
+    Esempio: https://files.mastodon.social/accounts/avatars/000/013/179/original/b4ceb19c9c54ec7e.png
+
+    avatar_static: URL dell'avatar statico dell'account.
+    Esempio: https://files.mastodon.social/accounts/avatars/000/013/179/original/b4ceb19c9c54ec7e.png
+
+    header: URL dell'intestazione dell'account.
+    Esempio: https://files.mastodon.social/accounts/headers/000/013/179/original/1375be116fbe0f1d.png
+
+    header_static: URL dell'intestazione statica dell'account.
+    Esempio: https://files.mastodon.social/accounts/headers/000/013/179/original/1375be116fbe0f1d.png
+
+    followers_count: Numero di follower.
+    Esempio: 819430
+
+    following_count: Numero di utenti seguiti.
+    Esempio: 3
+
+    statuses_count: Numero di post.
+    Esempio: 267
+
+    last_status_at: Data dell'ultimo post.
+    Esempio: 2024-07-11
+
+    hide_collections: Indica se le collezioni sono nascoste.
+    Esempio: False
+
+    noindex: Indica se l'account non deve essere indicizzato.
+    Esempio: False
+
+    emojis: Elenco degli emoji associati all'account.
+    Esempio: [] (vuoto in questo caso)
+
+    roles: Elenco dei ruoli associati all'account.
+    Esempio: [] (vuoto in questo caso)
+
+    fields: Campi personalizzati dell'account.
+
+        name: Nome del campo.
+        Esempio: Homepage
+
+        value: Valore del campo.
+        Esempio: <a href="https://joinmastodon.org" target="_blank" rel="nofollow noopener noreferrer me" translate="no"><span class="invisible">https://</span><span class="">joinmastodon.org</span><span class="invisible"></span></a>
+
+        verified_at: Data di verifica del campo.
+        Esempio: 2018-10-31T04:11:00.076+00:00
+
+rules: Regole dell'istanza.
+
+    id: ID della regola.
+    Esempio: 1
+
+    text: Testo della regola.
+    Esempio: Sexually explicit or violent media must be marked as sensitive or with a content warning
+
+    hint: Suggerimento o descrizione aggiuntiva della regola.
+    Esempio: This includes content that is particularly provocative even if it may not show specific body parts, as well as dead bodies, bloody injuries, and other gore. Particularly obscene content may be prohibited entirely. Profile pictures and header images may not contain sexually explicit or violent media.
+
+#--------------------#--------------------#--------------------#--------------------
+
+instance_peers = requests.get(f"{base_url}/api/v1/instance/peers")
+print(instance_peers.json())
+
+Un peer in questo contesto è un'altra istanza Mastodon (mastodon.social, mstdn,io, ecc..)
+(o un'istanza di un altro software compatibile con il protocollo ActivityPub, peertube, pixelfield, ecc...) 
+che interagisce con la tua istanza. 
+Queste interazioni possono includere la condivisione di contenuti, la federazione di post, seguaci, e altre attività sociali.
+Sono tantimissimissime.
+
+#--------------------#--------------------#--------------------#--------------------
+
+instance_activity = requests.get(f"{base_url}/api/v1/instance/activity")
+
+[{'week': '1722695369', 'statuses': '68089', 'logins': '35895', 'registrations': '782'}, 
+{'week': '1722090569', 'statuses': '770749', 'logins': '125423', 'registrations': '8484'}, 
+{'week': '1721485769', 'statuses': '797575', 'logins': '126418', 'registrations': '8599'}, 
+{'week': '1720880969', 'statuses': '781319', 'logins': '127991', 'registrations': '10281'}, 
+{'week': '1720276169', 'statuses': '773816', 'logins': '127543', 'registrations': '8021'}, 
+{'week': '1719671369', 'statuses': '772238', 'logins': '127415', 'registrations': '7991'}, 
+{'week': '1719066569', 'statuses': '742763', 'logins': '128763', 'registrations': '8439'}, 
+{'week': '1718461769', 'statuses': '751616', 'logins': '131767', 'registrations': '7981'}, 
+{'week': '1717856969', 'statuses': '766669', 'logins': '133594', 'registrations': '8373'}, 
+{'week': '1717252169', 'statuses': '733288', 'logins': '129857', 'registrations': '8761'}, 
+{'week': '1716647369', 'statuses': '722285', 'logins': '129951', 'registrations': '8335'}, 
+{'week': '1716042569', 'statuses': '720681', 'logins': '130279', 'registrations': '8165'}]
+
+ovvero
+
+Week starting 2024-08-03:
+  Statuses: 68089 -- Mostra quanti post sono stati fatti nell'istanza durante la settimana.
+  Logins: 35895 -- Mostra il numero di accessi degli utenti nell'istanza durante la settimana.
+  Registrations: 782 -- Mostra quanti nuovi utenti si sono registrati.
+
+#--------------------#--------------------#--------------------#--------------------
+
+custom_emojis = requests.get(f"{base_url}/api/v1/custom_emojis")
+
+L output mostra solo le emoji personalizzate che sono state aggiunte specificamente alla tua istanza di Mastodon. 
+Possono cambiare tra istanze.
+
+{'shortcode': 'aaaa', 
+'url': 'https://files.mastodon.social/custom_emojis/images/000/007/118/original/aaaa.png', 
+'static_url': 'https://files.mastodon.social/custom_emojis/images/000/007/118/static/aaaa.png', 
+'visible_in_picker': True, 
+'category': 'Cats'}
+
+shortcode = Questo è il testo che puoi utilizzare per richiamare l'emoji nei tuoi post.
+            Infatti scrivendo :aaaa allora comparirà l'emoji
+
+url = Questo URL punta all'immagine dell'emoji e può essere usato per visualizzarlo in contesti dove è necessario.
+
+static_url = L'URL dell'emoji personalizzato nella sua forma statica (senza animazioni, se applicabili). 
+             In molti casi, static_url e url possono essere identici, ma static_url è specificamente per versioni statiche dell'emoji.
+
+visible_in_picker = cioè la selezione visiva che gli utenti possono aprire quando vogliono inserire emoji nei loro post. 
+                    Se è true, l'emoji sarà visibile e selezionabile nel picker; se è false, non sarà visibile lì.
+
+category = Questo aiuta a trovare emoji specifici in base al loro tema o tipo. 
+
+#--------------------#--------------------#--------------------#--------------------
+
+trends = requests.get(f"{base_url}/api/v1/trends")
+
+contiene una lista di hashtag che sono attualmente popolari o molto discussi sull'istanza Mastodon specifica.
+
+[
+    {
+        "name": "ThingsSaidAtAWeddingAndInSports",
+        "url": "https://mastodon.social/tags/thingssaidataweddingandinsports",
+        "history": [
+            {"day": "1722729600", "accounts": "78", "uses": "249"},
+            {"day": "1722643200", "accounts": "0", "uses": "0"},
+            {"day": "1722556800", "accounts": "0", "uses": "0"},
+            {"day": "1722470400", "accounts": "0", "uses": "0"},
+            {"day": "1722384000", "accounts": "0", "uses": "0"},
+            {"day": "1722297600", "accounts": "0", "uses": "0"},
+            {"day": "1722211200", "accounts": "0", "uses": "0"}
+        ]
+    },
+    ...
+]
+
+name = Il nome dell'hashtag che è di tendenza.
+url = L'URL che ti porta alla pagina dell'hashtag su Mastodon.
+history = La cronologia dell'uso dell'hashtag, rappresentata giorno per giorno. Ogni voce include:
+    day = La data in formato timestamp UNIX.
+    accounts = Il numero di account che hanno usato l'hashtag in quel giorno, ovvero 'day'
+    uses = Il numero totale di volte che l'hashtag è stato usato in quel giorno.

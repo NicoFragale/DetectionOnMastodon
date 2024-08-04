@@ -1,0 +1,195 @@
+le API di mastodon raccolgono diversi tipi di dati:
+1. toots
+2. utenti
+3. followers 
+4. seguiti 
+5. hashtag
+6. trend 
+7. notifiche
+
+
+Ogni API ha un rate limit specifico, ovvero un limite 
+massimo di richieste che possono essere effettuate in 
+un determinato periodo di tempo. È importante rispettare 
+questi limiti per evitare di essere bloccati dall'istanza Mastodon.
+
+Per calcolare quante richieste possiamo fare dobbiamo considerare:
+
+1. LIMITE RICHIESTE PER ENDOPOINT, specificato nella documentazione;
+2. NUMERO UTENTI DA MONITORARE, quanti utenti e post vogliamo raccogliere;
+3. FREQUENZA DELLE RICHIESTE, ogni quanto tempo vogliamo aggiornare i dati raccolti;
+
+Endpoint: /api/v1/timelines/public   : restituisce i post pubblici 
+
+
+A cosa serve la libreria sys?
+Consente di leggere e gestire gli argomenti passati a riga di comando e 
+terminare il programma in modo controllato se si verificano condizioni di errore.
+
+A cosa serve request?
+Serve ad effettuare richieste HTTP come GET, POST, PUT, DELETE.
+
+
+L'access token rappresenta le credenziali di un utente e consente all'applicazione 
+di agire a nome di quell'utente. Quando utilizzi un access token, le API sanno chi è l'utente, 
+ma non sempre è sufficiente per tutte le operazioni.
+Non è necessario includere l'ID dell'utente.
+
+
+L'ID dell'utente è un identificativo univoco dell'utente all'interno del sistema di Mastodon. 
+Serve per specificare esattamente quale utente stai cercando di ottenere o modificare.
+Quando si fa una richiesta GET per ottenere i post di un utente
+è necessario specificare quale utente si intende interrogare. 
+
+Mastodon non sopporta PUT, quindi non si possono modificare i post, 
+devi obbligatoriamente eliminare il post e poi ricrearlo.
+
+CLIENT KEY: è un identificatore pubblico per l'applicazione.
+e serve ad identificare in modo univoco l'applicazione che sta
+tentando di accedere all'API.
+
+CLIENT SECRET: è una chiave privata associata alla tua applicazione.
+Viene utilizzato per dimostrare l'autenticità dell'applicazione
+durante il processo di autenticazione e autorizzazione.
+È utilizzato nel back-end per la comunicazione sicura tra la tua applicazione 
+e il server dell'API.
+Deve rimanere segreto.
+
+Cosa si puo fare?
+
+1. AUTENTICAZIONE E ACCESSO
+- Utilizzato per registrare una nuova applicazione e ottenere le credenziali (client ID e client secret) necessarie per l'autenticazione.
+- Permette di autorizzare un'applicazione a interagire con l'account dell'utente. Restituisce un codice di autorizzazione che può essere scambiato per un token di accesso.
+- Utilizzato per ottenere un token di accesso utilizzando il codice di autorizzazione.
+
+2. GESTIONE DEI POST
+
+3. GESTIONE DEGLI UTENTI
+- Recupera le informazioni di un utente specifico.
+- Segui un utente specifico.
+- Smetti di seguire un utente specifico.
+
+4. GESTIONE DELLE RELAZIONI
+- Recupera le relazioni (follow e follower) tra l'utente e altri utenti specificati.
+
+5. RICERCA E HASHTAG
+- Permette di cercare stati (post) e utenti in base ai termini di ricerca.
+- Recupera gli stati che utilizzano un hashtag specifico.
+
+6. ALTRI ENDOPOINTS
+- Recupero delle Timeline
+- Gestione delle Notifiche
+- Gestione dei Media
+
+
+RATE LIMIT 
+Rate Limit: Indica il numero massimo di richieste che puoi effettuare nel periodo di tempo specificato (solitamente un minuto).
+Rate Limit Remaining: Mostra quante richieste puoi ancora effettuare prima che venga raggiunto il limite.
+Rate Limit Reset: Indica il momento in cui il contatore di rate limit verrà resettato è una stringa di data e ora in formato ISO 8601
+
+-Indipentemente dal numero di richieste effettuate il rate limit si resetta ogni 5 minuti
+-Posso effettuare 300 richieste ogni 300 secondi
+N.B Vengono soddisfatte 3 richieste rate_limit al secondo, a volte 4
+
+Quando rimangono 0 richieste possibili, allora compare: Il limite di rate verrà resettato tra 'x' secondi.
+
+
+TO-DO 
+- gruppi di richieste potrebbero avere rate limit differenti, verificano
+    oppure Potrebbe esserci una qualche forma di caching che fa sembrare che 
+    il rate limit non sia stato aggiornato immediatamente dopo una richiesta.
+
+file json del post:
+{
+    id: Identificatore unico del post.
+    
+    created_at: Data e ora di creazione del post in formato ISO 8601.
+    
+    in_reply_to_id: ID del post a cui questo post risponde, se applicabile (altrimenti None).
+    
+    in_reply_to_account_id: ID dell'account a cui questo post risponde, se applicabile (altrimenti None).
+    
+    sensitive: Indica se il post contiene contenuti sensibili (booleano).
+    
+    spoiler_text: Testo dello spoiler, se presente.
+    
+    visibility: Visibilità del post (public, unlisted, private, direct).
+    
+    language: Lingua del post (codice ISO 639-1).
+    
+    uri: URI del post.
+    
+    url: URL del post. (cambiano ultimi due parametri rispetto a uri)
+    
+    
+    replies_count: Numero di risposte al post.
+    
+    reblogs_count: Numero di volte che il post è stato ripubblicato.
+    
+    favourites_count: Numero di volte che il post è stato aggiunto ai preferiti.
+    
+    edited_at: Data e ora dell'ultima modifica del post, se modificato.
+    
+    favourited: Indica se l'utente autenticato ha aggiunto il post ai preferiti (booleano).
+    
+    reblogged: Indica se l'utente autenticato ha ripubblicato il post (booleano).
+    
+    muted: Indica se l'utente autenticato ha messo in muto il post (booleano).
+    
+    bookmarked: Indica se l'utente autenticato ha aggiunto il post ai segnalibri (booleano).
+    
+    pinned: Indica se il post è stato fissato in cima al profilo dell'utente (booleano).
+    
+    content: Contenuto HTML del post.
+    
+    filtered: Lista di filtri applicati al post (vuota se non ce ne sono).
+    
+    reblog: Se il post è una ripubblicazione di un altro post, contiene i dettagli del post originale (altrimenti None).
+    
+    application: Informazioni sull'applicazione utilizzata per creare il post:
+    
+        name: Nome dell'applicazione.
+        website: Sito web dell'applicazione (se disponibile).
+    
+    account: Informazioni sull'account che ha creato il post:
+        
+        id: ID dell'account.
+        username: Nome utente.
+        acct: Account handle.
+        display_name: Nome visualizzato.
+        locked: Indica se l'account è bloccato (booleano).
+        bot: Indica se l'account è un bot (booleano).
+        discoverable: Indica se l'account è scopribile (booleano).
+        indexable: Indica se l'account è indicizzabile (booleano).
+        group: Indica se l'account è un gruppo (booleano).
+        created_at: Data e ora di creazione dell'account.
+        note: Biografia dell'utente.
+        url: URL del profilo dell'account.
+        uri: URI del profilo dell'account.
+        avatar: URL dell'immagine dell'avatar.
+        avatar_static: URL dell'immagine statica dell'avatar.
+        header: URL dell'immagine di intestazione.
+        header_static: URL dell'immagine statica di intestazione.
+        followers_count: Numero di follower.
+        following_count: Numero di account seguiti.
+        statuses_count: Numero totale di post creati.
+        last_status_at: Data dell'ultimo post.
+        hide_collections: Indica se le collezioni sono nascoste (se presente).
+        noindex: Indica se l'account non dovrebbe essere indicizzato dai motori di ricerca.
+        emojis: Lista di emoji personalizzati usati nell'account.
+        roles: Lista di ruoli dell'account.
+        fields: Lista di campi personalizzati nell'account.
+    
+    media_attachments: Lista di allegati multimediali associati al post (vuota se non ce ne sono).
+    
+    mentions: Lista di menzioni di altri account nel post (vuota se non ce ne sono).
+    
+    tags: Lista di tag utilizzati nel post (vuota se non ce ne sono).
+    
+    emojis: Lista di emoji personalizzati usati nel post.
+    
+    card: Informazioni sulle anteprime dei link nel post (se presente).
+    
+    poll: Dettagli del sondaggio associato al post (se presente).
+
+}

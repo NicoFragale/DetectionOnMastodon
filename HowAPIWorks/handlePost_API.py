@@ -1,5 +1,7 @@
 import requests
 import logging
+import time
+from datetime import datetime, timedelta
 
 # Configurazione del logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -32,7 +34,7 @@ def make_post_request(url, headers, data):
     try:
         response = requests.post(url, headers=headers, json=data)
         response.raise_for_status()  # Ritorna requests.exceptions.HTTPError in caso di 4xx/5xx
-        return response
+        return response.json()
     
     except requests.exceptions.HTTPError as http_err:
         logging.error(f"HTTP error occurred: {http_err}")
@@ -77,6 +79,7 @@ def get_user_posts(user_id, headers):
         response = requests.get(url, headers=headers)
         response.raise_for_status()
         return response.json()
+    
     except requests.exceptions.HTTPError as http_err:
         logging.error(f"HTTP error occurred: {http_err}")
         logging.error(f"Response Status Code: {response.status_code}")
@@ -86,15 +89,34 @@ def get_user_posts(user_id, headers):
     except Exception as err:
         logging.error(f"Other error occurred: {err}")
 
+def rate_limit(headers, endpoint_url):
+    response = requests.get(endpoint_url, headers=headers)
+    rate_limit = response.headers.get('X-RateLimit-Limit')
+    rate_limit_remaining = response.headers.get('X-RateLimit-Remaining')
+    rate_limit_reset = response.headers.get('X-RateLimit-Reset')
+    
+    # Converti la stringa ISO 8601 in un oggetto datetime
+    reset_time = datetime.fromisoformat(rate_limit_reset.replace('Z', '+00:00'))
+
+    # Calcola il tempo rimanente in secondi fino al reset
+    time_until_reset = (reset_time - datetime.now(reset_time.tzinfo)).total_seconds()
+
+    logging.info(f"Rate Limit: {rate_limit}")
+    logging.info(f"Rate Limit Remaining: {rate_limit_remaining}")
+    logging.info(f"Rate Limit Reset Time: {reset_time} (in {time_until_reset} seconds)")
+
 def main():
     
-    user_id = '112762111075688795'  
-    access_token = 'm4OkFhIdpe93ABgKoUOBuBfG7NboAM8dpiI1K27BCcc'  # Assicurati di usare un token di accesso valido
+    endpoint_url = "https://mastodon.social/api/v1/accounts/verify_credentials"
+    user_id = ''  
+    access_token = ''  # Assicurati di usare un token di accesso valido
     headers = {
         'Authorization': f'Bearer {access_token}',
         'Content-Type': 'application/json'
     }
 
+    rate_limit(headers=headers, endpoint_url=endpoint_url)
+    
     while True:
         action = input("Vuoi pubblicare un nuovo post, eliminare un post esistente o uscire? (pubblica/elimina/exit): ").strip().lower()
         
@@ -112,7 +134,8 @@ def main():
             if response:
                 logging.info("Post pubblicato con successo.")
                 logging.info(f"Response: {response}")  # Visualizza la risposta in formato JSON
-        
+                rate_limit(headers=headers, endpoint_url=endpoint_url)
+
         elif action == 'elimina':
             
             posts = get_user_posts(user_id, headers)
@@ -130,7 +153,7 @@ def main():
             if response:
                 logging.info("Post eliminato con successo.")
                 logging.info(f"Response: {response}")  # Visualizza la risposta in formato JSON
-        
+                rate_limit(headers=headers, endpoint_url=endpoint_url)
         else:
             logging.error("Azione non riconosciuta. Per favore scegli 'pubblica', 'elimina' o 'exit'.")
 
