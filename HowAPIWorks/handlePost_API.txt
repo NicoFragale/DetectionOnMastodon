@@ -94,11 +94,6 @@ N.B Vengono soddisfatte 3 richieste rate_limit al secondo, a volte 4
 Quando rimangono 0 richieste possibili, allora compare: Il limite di rate verrà resettato tra 'x' secondi.
 
 
-TO-DO 
-- gruppi di richieste potrebbero avere rate limit differenti, verificano
-    oppure Potrebbe esserci una qualche forma di caching che fa sembrare che 
-    il rate limit non sia stato aggiornato immediatamente dopo una richiesta.
-
 file json del post:
 {
     id: Identificatore unico del post.
@@ -120,7 +115,6 @@ file json del post:
     uri: URI del post.
     
     url: URL del post. (cambiano ultimi due parametri rispetto a uri)
-    
     
     replies_count: Numero di risposte al post.
     

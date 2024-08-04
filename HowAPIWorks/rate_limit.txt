@@ -1,0 +1,44 @@
+Un endpoint in ambito API (Application Programming Interface) è un URL (Uniform Resource Locator) 
+che rappresenta una risorsa o un'azione specifica all'interno di un'API. 
+
+https://api.socialmedia.com è l'URL base dell'API.
+/users/{user_id}/posts è il percorso specifico che indica che vogliamo ottenere tutti i post dell'utente con un ID specifico. 
+{user_id} è un parametro che dovrà essere sostituito con l'ID reale dell'utente.
+
+Se l'ID dell'utente è 123, l'endpoint completo per ottenere i post di quell'utente sarà:
+Endpoint: https://api.socialmedia.com/users/123/posts
+
+#--------------------#--------------------#--------------------#--------------------
+
+Ogni account può effettuare un massimo di 300 richieste totali a qualsiasi endpoint 
+o metodo API entro un intervallo di 5 minuti. 
+Questo include tutte le operazioni come postare, ottenere dati, ecc.
+
+#--------------------#--------------------#--------------------#--------------------
+
+L'endpoint POST /api/v1/media può essere chiamato un massimo di 30 volte per account 
+entro un periodo di 30 minuti. Questo limite si applica al caricamento di file multimediali come immagini, 
+video, ecc.
+
+#--------------------#--------------------#--------------------#--------------------
+
+Gli endpoint DELETE /api/v1/statuses/:id e POST /api/v1/statuses/:id/unreblog possono essere chiamati 
+un massimo di 30 volte ciascuno entro un periodo di 30 minuti per account. Questo include le azioni di 
+eliminazione di post e la rimozione di repost.
+
+#--------------------#--------------------#--------------------#--------------------
+
+Ogni indirizzo IP può effettuare un massimo di 300 richieste totali a qualsiasi endpoint o metodo API 
+entro un intervallo di 5 minuti. Questo limite è simile a quello per account, ma si applica a tutti gli account 
+che utilizzano lo stesso indirizzo IP.
+
+#--------------------#--------------------#--------------------#--------------------
+
+L'endpoint POST /api/v1/accounts può essere chiamato un massimo di 5 volte per indirizzo IP 
+entro un periodo di 30 minuti. Questo limite si applica alla creazione di nuovi account sulla piattaforma.
+
+#--------------------#--------------------#--------------------#--------------------
+
+
+
+#--------------------#--------------------#--------------------#--------------------

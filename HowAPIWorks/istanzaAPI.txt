@@ -288,3 +288,5 @@ history = La cronologia dell'uso dell'hashtag, rappresentata giorno per giorno. 
     day = La data in formato timestamp UNIX.
     accounts = Il numero di account che hanno usato l'hashtag in quel giorno, ovvero 'day'
     uses = Il numero totale di volte che l'hashtag è stato usato in quel giorno.
+
+
