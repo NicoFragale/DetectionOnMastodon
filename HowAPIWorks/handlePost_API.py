@@ -2,6 +2,12 @@ import requests
 import logging
 import time
 from datetime import datetime, timedelta
+import sys
+import os
+# Aggiungi la directory superiore al percorso di ricerca dei moduli
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from credentials import user_id, access_token, endpoint_url
+
 
 # Configurazione del logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -34,7 +40,7 @@ def make_post_request(url, headers, data):
     try:
         response = requests.post(url, headers=headers, json=data)
         response.raise_for_status()  # Ritorna requests.exceptions.HTTPError in caso di 4xx/5xx
-        return response.json()
+        return response
     
     except requests.exceptions.HTTPError as http_err:
         logging.error(f"HTTP error occurred: {http_err}")
@@ -57,6 +63,7 @@ def make_delete_request(url, headers):
         response = requests.delete(url, headers=headers)
         response.raise_for_status()
         return response
+    
     except requests.exceptions.HTTPError as http_err:
         logging.error(f"HTTP error occurred: {http_err}")
         logging.error(f"Response Status Code: {response.status_code}")
@@ -107,9 +114,6 @@ def rate_limit(headers, endpoint_url):
 
 def main():
     
-    endpoint_url = "https://mastodon.social/api/v1/accounts/verify_credentials"
-    user_id = ''  
-    access_token = ''  # Assicurati di usare un token di accesso valido
     headers = {
         'Authorization': f'Bearer {access_token}',
         'Content-Type': 'application/json'
