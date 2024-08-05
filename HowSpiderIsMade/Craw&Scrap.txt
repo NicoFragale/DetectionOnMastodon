@@ -1,0 +1,92 @@
+CRAWLING:
+Crawling è il processo di navigazione automatizzata attraverso pagine web per raccogliere informazioni. 
+I crawler, spesso chiamati "spider" o "bot", seguono i link trovati nelle pagine per scoprirne di nuove 
+e raccogliere dati. Questo è un passaggio preliminare spesso usato nel web scraping per ottenere 
+le pagine web che poi saranno analizzate per estrarre dati specifici.
+
+1. Inizializzazione: Un crawler parte da una lista di URL iniziali (chiamata "seed URLs").
+
+2. Download della Pagina: Il crawler scarica il contenuto di ogni pagina web trovata.
+
+3. Analisi dei Link: Il contenuto della pagina viene analizzato per trovare nuovi link a pagine web che non sono state ancora visitate.
+
+4. Ripetizione: Il crawler visita questi nuovi link e ripete il processo.
+
+NOTA BENISSIMO!!!!!!!!
+I crawler devono rispettare il file robots.txt di un sito web, che può specificare quali parti del sito sono accessibili ai bot.
+
+#--------------------#--------------------#--------------------#--------------------
+
+Web scraping è il processo di estrazione automatizzata di dati da siti web. Questo può essere fatto 
+tramite software che interagiscono con i siti web e recuperano le informazioni richieste.
+
+1. Invio di una Richiesta: Il software di scraping invia una richiesta HTTP al sito web di destinazione.
+    Questo può essere fatto utilizzando librerie come requests in Python.
+
+2. Ricezione della Risposta: Il sito web risponde alla richiesta con i dati richiesti, che possono essere 
+    in formato HTML, JSON, o altri formati.
+
+3. Parsing dei Dati: I dati ricevuti vengono analizzati per estrarre le informazioni rilevanti.
+
+4. Memorizzazione dei Dati: Le informazioni estratte vengono memorizzate in un formato strutturato, come database, file CSV, ecc.
+
+-----------
+REQUESTS:
+
+è una libreria Python per inviare richieste HTTP in modo semplice e intuitivo. Permette di interagire con i siti web 
+come farebbe un browser, ma tramite script Python.  
+
+-----------
+BEAUTIFUL SHOP:
+
+Beautiful Soup è una libreria Python per il parsing di documenti HTML e XML. È particolarmente utile 
+per estrarre dati da pagine web e navigare attraverso il DOM dell'HTML.
+
+------------
+SCRAPY:
+
+Scrapy è un framework Python per il web scraping. È potente e flessibile, permettendo di costruire spider che possono navigare, 
+estrarre e memorizzare dati da siti web in modo strutturato.
+
+------------
+PARSING:
+processo di analisi di un codice HTML per estrarre informazioni, 
+include estrarre dati da alcuni specifici tag HTML, identificare collegamenti,
+immagini o tabelle
+
+------------
+DOM dell'HTML:
+è una rappresentazione strutturata del documento HTML che il browser crea quando carica una pagina web.
+
+------------
+Selettori CSS:
+sono pattern utilizzati per selezionare e manipolare elementi HTML.
+Oltre ad applicare stili servono anche per individuare elementi specifici del DOM.
+
+------------
+MIDDLEWARE:
+Funzioni o programmi che elaborano e manipolano richieste e risposte tra un client e un server.
+software che si trova tra il sistema operativo o il database e le applicazioni che girano su un server.
+
+------------
+ROBOTS.TXT di Mastodon
+# See http://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: *
+Disallow: /media_proxy/
+Disallow: /interact/
+
+- Questo blocco indica che il crawler identificato come GPTBot non è autorizzato a visitare 
+    alcuna parte del sito (Disallow: / significa che tutte le pagine sono vietate).
+
+- Tutti gli altri web crawler non sono autorizzati a scansionare o accedere a qualsiasi 
+    URL che inizi con '/media_proxy/' e '/interact/'
+
+Se uno spider visita URL non accessibili allora:
+- Riceve un errore HTTP (come 403, 404, 401).
+- Potrebbe essere bloccato a livello di rete o configurazione del server.
+- Gli URL non accessibili non verranno indicizzati e non appariranno nei risultati di ricerca o nei report di scansione.
+- La gestione di questi URL dipende dalle politiche del sito web e dalla configurazione del server.
