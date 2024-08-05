@@ -112,6 +112,27 @@ def rate_limit(headers, endpoint_url):
     logging.info(f"Rate Limit Remaining: {rate_limit_remaining}")
     logging.info(f"Rate Limit Reset Time: {reset_time} (in {time_until_reset} seconds)")
 
+def update_post(new_content, url, headers):
+    
+    data = {
+        'status': new_content
+    }
+
+    try:
+        response = requests.put(url, headers=headers, json=data)
+        response.raise_for_status()  # Ritorna requests.exceptions.HTTPError in caso di 4xx/5xx
+        return response.json()
+    
+    except requests.exceptions.HTTPError as http_err:
+        logging.error(f"HTTP error occurred: {http_err}")
+        logging.error(f"Response Status Code: {response.status_code}")
+        logging.error(f"Response Headers: {response.headers}")
+        logging.error(f"Response Body: {response.text}")
+    except Exception as err:
+        logging.error(f"Other error occurred: {err}")
+ 
+
+
 def main():
     
     headers = {
@@ -122,13 +143,13 @@ def main():
     rate_limit(headers=headers, endpoint_url=endpoint_url)
     
     while True:
-        action = input("Vuoi pubblicare un nuovo post, eliminare un post esistente o uscire? (pubblica/elimina/exit): ").strip().lower()
+        action = input("Vuoi pubblicare un nuovo post, eliminare un post esistente, modificarne uno o uscire? (post/delete/modify/exit): ").strip().lower()
         
         if action == 'exit':
             logging.info("Uscita dal programma.")
             break
         
-        elif action == 'pubblica':
+        elif action == 'post':
             url = "https://mastodon.social/api/v1/statuses"
             content = input("Inserisci il contenuto del post che vuoi creare: ")
             data = {
@@ -140,7 +161,7 @@ def main():
                 logging.info(f"Response: {response}")  # Visualizza la risposta in formato JSON
                 rate_limit(headers=headers, endpoint_url=endpoint_url)
 
-        elif action == 'elimina':
+        elif action == 'delete':
             
             posts = get_user_posts(user_id, headers)
             
@@ -158,6 +179,27 @@ def main():
                 logging.info("Post eliminato con successo.")
                 logging.info(f"Response: {response}")  # Visualizza la risposta in formato JSON
                 rate_limit(headers=headers, endpoint_url=endpoint_url)
+        
+        elif action == 'modify':
+
+            posts = get_user_posts(user_id, headers)
+
+            if not posts:
+                logging.info('Non ci sono post disponibili')
+                continue
+
+            for post in posts:
+                logging.info(f"Post ID: {post['id']}, Content: {post['content']}")
+
+            post_id = input("Inserisci l'ID del post che vuoi modificare: ")
+            new_content = input("Inserisci il testo modificato:")
+            url = f"https://mastodon.social/api/v1/statuses/{post_id}"
+            response = update_post( new_content, url, headers)
+            if response:
+                logging.info("Post modificato con successo")
+                logging.info(f"Response: {response}")  # Visualizza la risposta in formato JSON
+                rate_limit(headers=headers, endpoint_url=endpoint_url)
+
         else:
             logging.error("Azione non riconosciuta. Per favore scegli 'pubblica', 'elimina' o 'exit'.")
 
