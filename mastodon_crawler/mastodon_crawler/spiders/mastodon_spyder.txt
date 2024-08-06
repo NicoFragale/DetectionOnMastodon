@@ -1,0 +1,42 @@
+Ecco cosa fornisce in output mastodon_spider.py:
+
+1. Informazioni generali sul crawler
+
+2. Estensioni e middleware abilitati
+
+3. Informazioni sul processo di esecuzione
+    - informazioni su console telnet
+    - statistiche di crawling
+
+4. Statistiche e log
+    downloader/request_bytes: Numero di byte richiesti (442).
+    downloader/request_count: Numero totale di richieste (2).
+    downloader/request_method_count/GET: Numero di richieste GET (2).
+    downloader/response_bytes: Numero di byte ricevuti nelle risposte, la risposta è compressa(15117).
+    downloader/response_count: Numero totale di risposte ricevute (2).
+    downloader/response_status_count/200: Numero di risposte con stato 200 (OK) (2).
+    elapsed_time_seconds: Tempo totale di esecuzione in secondi (0.725536).
+    finish_reason: Motivo per cui lo spider ha terminato (finished).
+    finish_time: Data e ora di fine dell'esecuzione.
+    httpcompression/response_bytes: Byte ricevuti dopo la decompressione (23754).
+    httpcompression/response_count: Risposte compresse ricevute (2).
+    log_count/DEBUG: Numero di messaggi di log di debug (7).
+    log_count/INFO: Numero di messaggi di log informativi (10).
+    memusage/max: Massima memoria utilizzata (70615040 bytes).
+    memusage/startup: Memoria utilizzata all'avvio (70615040 bytes).
+    offsite/domains: Numero di domini fuori sito (1).
+    offsite/filtered: Numero di richieste fuori sito filtrate (1).
+    request_depth_max: Profondità massima delle richieste (1).
+    response_received_count: Numero totale di risposte ricevute (2).
+    robotstxt/request_count: Numero di richieste al file robots.txt (1).
+    robotstxt/response_count: Numero di risposte ricevute dal file robots.txt (1).
+    robotstxt/response_status_count/200: Numero di risposte con stato 200 dal file robots.txt (1).
+    scheduler/dequeued: Numero di richieste dequeueate (1).
+    scheduler/dequeued/memory: Numero di richieste dequeueate dalla memoria (1).
+    scheduler/enqueued: Numero di richieste enqueued (1).
+    scheduler/enqueued/memory: Numero di richieste enqueued in memoria (1).
+    start_time: Data e ora di inizio dell'esecuzione.
+
+5. URL visitati durante il crawling
+
+6. Motivo di chiusura
