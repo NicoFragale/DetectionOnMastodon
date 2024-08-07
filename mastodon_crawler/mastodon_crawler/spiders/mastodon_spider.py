@@ -1,6 +1,14 @@
 import logging
-logging.getLogger('scrapy').setLevel(logging.DEBUG)
+from scrapy.utils.log import configure_logging
 import scrapy
+
+# Configura il logging per Scrapy
+configure_logging(install_root_handler=False)
+logging.basicConfig(
+    format='%(asctime)s [%(name)s] %(levelname)s: %(message)s',
+    level=logging.INFO
+)
+logging.getLogger('scrapy').setLevel(logging.INFO)
 
 class MastodonSpider(scrapy.Spider):
     name = 'spidy'
@@ -34,32 +42,6 @@ class MastodonSpider(scrapy.Spider):
             '/interact/'
         ]
 
-        
         return any(url.startswith(path) for path in disallowed_paths)
-    
-# Configura il logging
-logging.basicConfig(level=logging.INFO)
 
 # Run the spider with: scrapy runspider mastodon_spider.py
-
-
-'''
-YIELD:
-yield è una keyword in Python che viene utilizzata per trasformare una funzione in un generatore. 
-Un generatore è un tipo speciale di funzione che restituisce un oggetto su cui puoi iterare (come una lista), 
-ma fa questo in modo "pigro" (lazily), il che significa che produce gli elementi uno alla volta e solo quando richiesto.
-
-'''
-
-'''Questa riga verifica se l'URL inizia con uno dei percorsi disallowati. 
-        Se sì, ritorna True, altrimenti False. 
-        Il metodo startswith controlla se una stringa inizia con un determinato prefisso. 
-        La funzione any ritorna True se almeno una delle condizioni è vera.
-'''
-
-
-
-'''parse viene chiamato automaticamente da Scrapy 
-    per gestire le risposte dalle richieste iniziali 
-    definite in start_urls. 
-    Il parametro response contiene il contenuto della pagina web scaricata.'''

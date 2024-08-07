@@ -40,3 +40,22 @@ Ecco cosa fornisce in output mastodon_spider.py:
 5. URL visitati durante il crawling
 
 6. Motivo di chiusura
+
+
+
+'''
+YIELD:
+yield è una keyword in Python che viene utilizzata per trasformare una funzione in un generatore. 
+Un generatore è un tipo speciale di funzione che restituisce un oggetto su cui puoi iterare (come una lista), 
+ma fa questo in modo "pigro" (lazily), il che significa che produce gli elementi uno alla volta e solo quando richiesto.
+
+#return any(url.startswith(path) for path in disallowed_paths)#
+Questa riga verifica se l'URL inizia con uno dei percorsi disallowati. 
+        Se sì, ritorna True, altrimenti False. 
+        Il metodo startswith controlla se una stringa inizia con un determinato prefisso. 
+        La funzione any ritorna True se almeno una delle condizioni è vera.
+
+parse viene chiamato automaticamente da Scrapy 
+    per gestire le risposte dalle richieste iniziali 
+    definite in start_urls. 
+    Il parametro response contiene il contenuto della pagina web scaricata.
