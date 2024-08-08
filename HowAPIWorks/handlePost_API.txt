@@ -41,9 +41,6 @@ Serve per specificare esattamente quale utente stai cercando di ottenere o modif
 Quando si fa una richiesta GET per ottenere i post di un utente
 è necessario specificare quale utente si intende interrogare. 
 
-Mastodon non sopporta PUT, quindi non si possono modificare i post, 
-devi obbligatoriamente eliminare il post e poi ricrearlo.
-
 CLIENT KEY: è un identificatore pubblico per l'applicazione.
 e serve ad identificare in modo univoco l'applicazione che sta
 tentando di accedere all'API.
