@@ -1,15 +1,11 @@
 import requests
 import logging
-import time
-from datetime import datetime, timedelta
-import sys
-import os
 from bs4 import BeautifulSoup
-# Aggiungi la directory superiore al percorso di ricerca dei moduli
+import sys
+import os 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from credentials import user_id, access_token, endpoint_url
+from credentials import user_id, access_token, instance_url
 
-# Configurazione del logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
@@ -31,20 +27,30 @@ def handle_http_error(response):
 
 
 def get_user_posts(user_id, headers):
-    """
-    Ottiene i post dell'utente tramite l'API di Mastodon.
-
-    :param user_id: ID dell'utente di cui ottenere i post.
-    :param headers: Gli header della richiesta.
-    :return: Lista dei post dell'utente.
-    """
-    url = f"https://mastodon.social/api/v1/accounts/{user_id}/statuses"
-    logging.info(f"Fetching posts from URL: {url}")
+    public_timeline_url = f"{instance_url}/api/v1/timelines/public"
+    logging.info(f"Fetching posts from URL: {instance_url}")
     try:
-        response = requests.get(url, headers=headers)
+        response = requests.get(public_timeline_url)
         logging.info(f"Response status code: {response.status_code}")
         response.raise_for_status()
-        return response.json()
+        posts = response.json()
+        number_post = 0 
+        for post in posts:
+            number_post += 1 
+            html_content = '' + post['content'] + ''
+            # Parsing del contenuto HTML
+            soup = BeautifulSoup(html_content, 'html.parser')
+
+            # Estrazione del testo
+            text = soup.get_text()
+
+            #print(post)
+            logging.info(f"User: {post['account']['username']}")
+            logging.info(f"Date: {post['created_at']}")
+            logging.info(f"Content: {text}")
+            print()
+            print()
+            print()
     
     except requests.exceptions.HTTPError as http_err:
         logging.error(f"HTTP error occurred: {http_err}")
@@ -54,6 +60,7 @@ def get_user_posts(user_id, headers):
         handle_http_error(response)
     except Exception as err:
         logging.error(f"Other error occurred: {err}")
+        logging.error(f"Failed to retrieve posts: {response.status_code}")
 
 
 def main():
@@ -63,20 +70,7 @@ def main():
         'Content-Type': 'application/json'
     }
 
-    posts = get_user_posts(user_id, headers)
+    get_user_posts(user_id, headers)
 
-    for post in posts:
-        html_content = '' + post['content'] + ''
-        # Parsing del contenuto HTML
-        soup = BeautifulSoup(html_content, 'html.parser')
-
-        # Estrazione del testo
-        text = soup.get_text()
-    
-        logging.info(f"Date: {post['created_at']}, Content: {text}")
-        print()
-        print()
-        print()
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
