@@ -8,6 +8,18 @@ from credentials import user_id, access_token, instance_url
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+def rate_limit(headers, endpoint_url):
+    response = requests.get(endpoint_url, headers=headers)
+    rate_limit = response.headers.get('X-RateLimit-Limit')
+    rate_limit_remaining = response.headers.get('X-RateLimit-Remaining')
+    rate_limit_reset = response.headers.get('X-RateLimit-Reset')
+
+    logging.info(f"Rate Limit: {rate_limit}")
+    logging.info(f"Rate Limit Remaining: {rate_limit_remaining}")
+    logging.info(f"Rate Limit Reset Time: {rate_limit_reset}")
+    print()
+    return rate_limit_remaining
+
 
 def handle_http_error(response):
     status_code = response.status_code
@@ -26,8 +38,7 @@ def handle_http_error(response):
             logging.error(f"HTTP error occurred with status code {status_code}: {response.reason}")
 
 
-def get_user_posts(user_id, headers):
-    public_timeline_url = f"{instance_url}/api/v1/timelines/public"
+def get_user_posts(user_id, headers, public_timeline_url):
     logging.info(f"Fetching posts from URL: {instance_url}")
     try:
         response = requests.get(public_timeline_url)
@@ -64,13 +75,14 @@ def get_user_posts(user_id, headers):
 
 
 def main():
-    
+    public_timeline_url = f"{instance_url}/api/v1/timelines/public"
     headers = {
         'Authorization': f'Bearer {access_token}',
         'Content-Type': 'application/json'
     }
-
-    get_user_posts(user_id, headers)
-
+    rate_limit(headers, public_timeline_url)
+    get_user_posts(user_id, headers, public_timeline_url)
+    rate_limit(headers, public_timeline_url)
+    
 if __name__ == '__main__':
     main()
